@@ -35,7 +35,7 @@
 
     const randomFile = files[Math.floor(Math.random() * files.length)];
     const ext = randomFile.split('.').pop().toLowerCase();
-    const src = `/ass/${randomFile}`;
+    const src = `ass/${randomFile}`;
 
     if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
       const img = document.createElement('img');
