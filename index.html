@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>get goldfished</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+  }
+  img, video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+</head>
+<body>
+<script>
+(async () => {
+  try {
+    // Fetch the manifest file that lists all media
+    const res = await fetch('/ass/manifest.json');
+    const files = await res.json();
+
+    if (!Array.isArray(files) || files.length === 0)
+      throw new Error("manifest.json is empty or invalid");
+
+    const randomFile = files[Math.floor(Math.random() * files.length)];
+    const ext = randomFile.split('.').pop().toLowerCase();
+    const src = `/ass/${randomFile}`;
+
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
+      const img = document.createElement('img');
+      img.src = src;
+      document.body.appendChild(img);
+    } else if (['mp4', 'mov', 'webm'].includes(ext)) {
+      const video = document.createElement('video');
+      video.src = src;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      document.body.appendChild(video);
+    } else {
+      document.body.innerHTML = `<p style="color:white;text-align:center;margin-top:40vh;font-size:2em;">Unsupported file: ${randomFile}</p>`;
+    }
+  } catch (err) {
+    document.body.innerHTML = `<p style="color:white;text-align:center;margin-top:40vh;font-size:2em;">Error: ${err.message}</p>`;
+  }
+})();
+</script>
+</body>
+</html>
